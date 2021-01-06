@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+<html lang="ja">
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    
+    <meta charset="UTF-8">
 <script>
     //var $accept = $inputElementReference.accept;
     //$inputElementReference.accept = "application/json";
@@ -35,7 +36,8 @@
         });
     }
     */
-    function showAccount(){
+   //↓動作確認済み
+    function ShowAccount(){
         $.ajax({
             type: 'GET',
             timeout: 10000,
@@ -49,20 +51,44 @@
             cache: false,
         }).done(function(e){
             console.log(e);
-            $('div').text(e.balance)
+            $('#showbalance').text(e.balance)
         }).fail(function(e){
         // 失敗時
         }).always(function(e){
         });
-    }   
+    } 
+    
+    function TransferAccount(from,to,amountOfMoney){
+        $.ajax({
+            type: 'POST',
+            timeout: 10000,
+            url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/transfer",
+            headers: {
+                        "accept": "application/json",
+                        "Authorization": "vgc9s02t8xizbal6g1wzjeqvwfk25hf2",
+                        "Content-Type: application/json":charset="UTF-8"
+                    },
+            data: {from : from, to : to, amountOfMoney : amountOfMoney},
+            dataType: 'json',
+            cache: false,
+        }).done(function(e){
+            console.log(e);
+            $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"送金されました")
+        }).fail(function(e){
+        // 失敗時
+        }).always(function(e){
+        });
+    } 
 </script>
 </head>
 
 <body>
-    <button onClick="showAccount()">aaa</button>
+    <button onClick="ShowAccount()">aaa</button>
+    <button onclick="TransferAccount("0000002","0000003",5000)">bbb</button>
+    
     <p>aaa</p>
-    <p>abc</p>
-    <div></div>
+    <div id="showbalance"></div>
+    <div id="transfer"></div>
 </body>
 
 
