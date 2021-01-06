@@ -8,11 +8,33 @@
         console.log(data)
         });
     }
+
+    function showAccount(){
+        $.ajax({
+   type: 'GET',
+   timeout: 10000,
+   url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/0000001",
+   headers: {
+    "accept": "application/json",
+    "Authorization": "XXXXXXXXXXXXXXXXXXXX"
+    },
+   data: { },
+   dataType: 'json',
+   cache: false,
+    }).done(function(e){
+        console.log(e);
+        $('div').text(e.balance)
+    }).fail(function(e){
+    // 失敗時
+    }).always(function(e){
+    });
+    }
 </script>
 </head>
 
 <body>
     <button onClick="addJoke()">aaa</button>
+    <button onClick="showAccount()">aaa</button>
     <p>aaa</p>
     <p>abc</p>
     <div></div>
