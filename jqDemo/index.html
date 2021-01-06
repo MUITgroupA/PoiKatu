@@ -14,7 +14,7 @@
         console.log(data)
         });
     }*/
-    function PointCheck(id){
+    function PointCheck(id){ //ポイントの確認
         $.ajax({
             type: 'GET',
             timeout: 10000,
@@ -27,41 +27,48 @@
             cache: false,
         }).done(function(e){
             console.log(e);
-            $('#point_check').text(e.Point)
-        }).fail(function(e){
-            $('#point_check').text("failed")
-        // 失敗時
-        }).always(function(e){
+            $('#now_point').text(JSON.stringify(e.Point));
         });
     }
-    function PointAdd(id,val){
-        $.ajax({
-            type: 'PUT',
-            timeout: 10000,
-            url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2",
-            headers: {
-                "accept": "application/json"
-            },
-            data: { id : id, val : val },
-            dataType: 'json',
-            cache: false,
-        }).done(function(e){
-            console.log(e);
-            $('#point_add').text(val+"ポイント追加されました")
-        }).fail(function(e){
-            $('#point_add').text("failed")
-        // 失敗時
-        }).always(function(e){
-        });
+    function PointAdd(id,val){ //ポイントの増減
+        let point = Number($('#now_point').text());
+        point = point + val;
+        if(point >= 0){
+            $.ajax({
+                type: 'PUT',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2?id="+id+"&val="+val,
+                headers: {
+                    "accept": "application/json"
+                },
+                dataType: 'json',
+                cache: false,
+            }).done(function(e){
+                $('#now_point').text(point);
+                if(val > 0){
+                    $('#message').text("ポイントが増加されました");
+                }
+                else{
+                    $('#message').text("ポイントを消費しました");                
+                }
+            });
+        }
+        else{
+            $('#message').text("ポイントが足りません");
+            console.log(point);  
+        }
     }
+    $(document).ready( function(){
+        PointCheck(1);
+    }); 
 </script>
 </head>
 
 <body>
-    <button onClick="PointCheck(1)">ポイントを確認</button>
-    <div id="point_check"></div>
-    <button onClick="PointAdd(1,10)">ポイントを増加</button>
-    <div id="point_add"></div>
+    <p>現在のポイント：<span id="now_point"></span></p>
+    <button onClick="PointAdd(1,100)">ポイントを増加</button>
+    <button onClick="PointAdd(1,-100)">ポイントを消費</button>
+    <div id="message"></div>
 </body>
 
 
