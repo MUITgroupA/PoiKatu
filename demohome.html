@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <meta charset="UTF-8">
+    
 <script>
     //var $accept = $inputElementReference.accept;
     //$inputElementReference.accept = "application/json";
@@ -66,16 +66,17 @@
             headers: {
                         "accept": "application/json",
                         "Authorization": "vgc9s02t8xizbal6g1wzjeqvwfk25hf2",
-                        "Content-Type: application/json":charset="UTF-8"
+                        //"contentType: application/json"
                     },
             data: {from : from, to : to, amountOfMoney : amountOfMoney},
+            //contentType: 'application/json',
             dataType: 'json',
             cache: false,
         }).done(function(e){
             console.log(e);
             $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"送金されました")
-        }).fail(function(e){
-        // 失敗時
+        }).fail(function(xhr,err){
+            console.log(xhr);// 失敗時
         }).always(function(e){
         });
     } 
@@ -84,7 +85,7 @@
 
 <body>
     <button onClick="ShowAccount()">aaa</button>
-    <button onclick="TransferAccount("0000002","0000003",5000)">bbb</button>
+    <button onclick="TransferAccount('0000002','0000003',5000)">bbb</button>
     
     <p>aaa</p>
     <div id="showbalance"></div>
