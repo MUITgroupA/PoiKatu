@@ -8,28 +8,6 @@
         console.log(data)
         });
     }
-<<<<<<< HEAD
-
-    function showAccount(){
-        $.ajax({
-   type: 'GET',
-   timeout: 10000,
-   url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/0000001",
-   headers: {
-    "accept": "application/json",
-    "Authorization": "XXXXXXXXXXXXXXXXXXXX"
-    },
-   data: { },
-   dataType: 'json',
-   cache: false,
-    }).done(function(e){
-        console.log(e);
-        $('div').text(e.balance)
-    }).fail(function(e){
-    // 失敗時
-    }).always(function(e){
-    });
-=======
     function PointCheck(){
         $.get("https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2", {id:1}, function(data){
         $('#point_check').text( JSON.stringify(data.NameLast) + JSON.stringify(data.NameFirst) + ":" + JSON.stringify(data.Point) + "ポイント<br>");
@@ -75,26 +53,14 @@
         // 失敗時
         }).always(function(e){
         });
->>>>>>> d8f628ca2faef2b571f0841ba078f0b5baeb4982
     }
 </script>
 </head>
 
 <body>
-<<<<<<< HEAD
-    <button onClick="addJoke()">aaa</button>
-    <button onClick="showAccount()">aaa</button>
-    <p>aaa</p>
-    <p>abc</p>
-    <div></div>
-=======
     <button onClick="PointCheck(1)">ポイントを確認</button>
     <div id="point_check"></div>
     <button onClick="PointAdd(1,10)">ポイントを増加</button>
     <div id="point_add"></div>
->>>>>>> d8f628ca2faef2b571f0841ba078f0b5baeb4982
 </body>
-
-
-
 </html>
