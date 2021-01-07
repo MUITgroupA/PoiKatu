@@ -80,13 +80,18 @@
         }).always(function(e){
         });
     } 
-    $(function(){
-        $("button").on("click",function(){
+   /*function myaccount(){
         $("#target input").val(function(index,oldValue){
-      return  oldValue * 10 + index;
-    });
-  }); 
-});
+            return  oldValue * 10 + index;
+        });
+        }    
+        $("#target input").val(function(index,oldValue){
+            var a = index;
+        });
+        }    
+        $('#showtarget').text(a)    
+       
+      */
 </script>
 
     
@@ -94,21 +99,21 @@
 </head>
 
 <body>
-    <button>ボタン</button>
+    <!--
+    <button onClick="myaccount()">ボタン</button>
     <div id="target">
-        <input type="text" value="1">
-        <input type="text" value="2">
-        <input type="text" value="3">
+        <input type="text">
     </div>
-
-
+    <br>
+    <div id="showtarget"></div>
+    */-->
     <h2>振り込み</h2>
     <div id="mynum">
         <label for="acnum">口座番号 (7桁) を入力してください:</label>
         <input type="text" id="acnum" name="acnum" required
             minlength="7" maxlength="7" size="15">
-    </div>   
-    <br> 
+    </div> 
+    <br>  
     <button onClick="ShowAccount('0000002')">預金金額</button>
     <div id="showbalance"></div>
     
