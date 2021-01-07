@@ -14,14 +14,20 @@
         console.log(data)
         });
     }*/
-    function FPGetAll( ){ //FPの個人情報の一覧
+    function FPGetAll(){ //FPの個人情報の一覧
         $.ajax({
             type: 'GET',
             timeout: 10000,
             url: "https://pmj0we4ptc.execute-api.ap-northeast-1.amazonaws.com/fp/fp",
-        }).done(function( ){
-            console.log(data);
-            $('#FPGetAll').text(JSON.stringify(data));
+            headers: {
+            "accept": "application/json",
+            },
+            data:{},
+            dataType:'json',
+            cache:false,
+        }).done(function(e){
+            console.log(e.Fpnum);
+            $('#FPGetAll').text(JSON.stringify(e.Fpnum));
         });
     }
     function PointAdd(id,val){ //ポイントの増減
@@ -59,9 +65,10 @@
 </head>
 
 <body>
-    <p>現在のポイント：<span id="FPGetAll"></span></p>
-    <button onClick="PointAdd(1,100)">ポイントを増加</button>
+    <button onclick="FPGetAll()">一覧</button>
+    <div id="FPGetAll"></div>
+    <!-- <button onClick="PointAdd(1,100)">ポイントを増加</button>
     <button onClick="PointAdd(1,-100)">ポイントを消費</button>
-    <div id="message"></div>
+    <div id="message"></div> -->
 </body>
 </html>
