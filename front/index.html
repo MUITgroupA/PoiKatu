@@ -34,6 +34,31 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
     </script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        function UpdatePointZandaka(id){ //ポイントの確認
+            $.ajax({
+                type: 'GET',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2",
+                headers: {
+                    "accept": "application/json"
+                },
+                data: { id : id },
+                dataType: 'json',
+                cache: false,
+            }).done(function(e){
+                console.log(e);
+                $('#now_point').text(JSON.stringify(e.Point));
+                $('#now_zandaka').text(JSON.stringify(e.Zandaka));
+                $('#muryou_kaisuu').text(Math.floor(Number(JSON.stringify(e.Point))/1000));
+                $('#nokori_point').text(1000-Number(JSON.stringify(e.Point))%1000);
+            });
+        }
+        $(document).ready( function(){
+          UpdatePointZandaka(1);
+        });
+      </script>
   </head>
   <body>
 
@@ -129,7 +154,7 @@
       <div class="container">
           <div class="row text-center">
               <div class="error-page">
-                <h2><a rel="nofollow" href="https://rebrand.ly/gg-engage-purchase/">円</a></h2>
+                <h2><span id="now_zandaka"></span>円</h2>
             　</div>
           </div>
       </div>         
@@ -144,9 +169,10 @@
       <div class="container">
         <div class="row">        
           <h1 class="section-title wow fadeIn animated" data-wow-delay=".2s">
-           ポイント<br><a rel="nofollow" href="https://rebrand.ly/gg-engage-purchase/" class="btn btn-common btn-lg">回無料</a>
+           <span id="now_point"></span>ポイント<br>
+           <a rel="nofollow" href="https://rebrand.ly/gg-engage-purchase/" class="btn btn-common btn-lg"><span id="muryou_kaisuu"></span>回無料</a>
           </h1>
-          <p class="section-subcontent">あと○○ポイント貯めれば無料券ゲット！</p>
+          <p class="section-subcontent">あと<span id="nokori_point"></span>ポイント貯めれば無料券ゲット！</p>
           <div class="col-sm-6 col-md-3">
             <!-- Service-Block-1 Item Starts -->
             <div class="service-item wow fadeInUpQuick animated" data-wow-delay=".5s">
