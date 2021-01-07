@@ -19,10 +19,6 @@
             type: 'GET',
             timeout: 10000,
             url: "https://pmj0we4ptc.execute-api.ap-northeast-1.amazonaws.com/fp/fp",
-            headers: {
-                "accept": "application/json"
-            },
-            cache: false,
         }).done(function( ){
             console.log(data);
             $('#FPGetAll').text(JSON.stringify(data));
