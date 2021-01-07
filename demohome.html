@@ -37,11 +37,11 @@
     }
     */
    //↓動作確認済み
-    function ShowAccount(){
+    function ShowAccount(anum){
         $.ajax({
             type: 'GET',
             timeout: 10000,
-            url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/0000001",
+            url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/"+anum, //最後の数字7桁が口座番号
             headers: {
                         "accept": "application/json",
                         "Authorization": "vgc9s02t8xizbal6g1wzjeqvwfk25hf2"
@@ -51,7 +51,7 @@
             cache: false,
         }).done(function(e){
             console.log(e);
-            $('#showbalance').text(e.balance)
+            $('#showbalance').text("現在の預金額"+ e.balance)
         }).fail(function(e){
         // 失敗時
         }).always(function(e){
@@ -74,22 +74,47 @@
             cache: false,
         }).done(function(e){
             console.log(e);
-            $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"送金されました")
+            $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"円送金されました")
         }).fail(function(xhr,err){
             console.log(xhr);// 失敗時
         }).always(function(e){
         });
     } 
+    $(function(){
+        $("button").on("click",function(){
+        $("#target input").val(function(index,oldValue){
+      return  oldValue * 10 + index;
+    });
+  }); 
+});
 </script>
+
+    
+
 </head>
 
 <body>
-    <button onClick="ShowAccount()">aaa</button>
-    <button onclick="TransferAccount('0000002','0000003',5000)">bbb</button>
-    
-    <p>aaa</p>
+    <button>ボタン</button>
+    <div id="target">
+        <input type="text" value="1">
+        <input type="text" value="2">
+        <input type="text" value="3">
+    </div>
+
+
+    <h2>振り込み</h2>
+    <div id="mynum">
+        <label for="acnum">口座番号 (7桁) を入力してください:</label>
+        <input type="text" id="acnum" name="acnum" required
+            minlength="7" maxlength="7" size="15">
+    </div>   
+    <br> 
+    <button onClick="ShowAccount('0000002')">預金金額</button>
     <div id="showbalance"></div>
+    
+    <p>振り込む金額を入力してください</p>
     <div id="transfer"></div>
+    <button onclick="TransferAccount('0000001','0000002',30)">振込確定</button>
 </body>
 
 
