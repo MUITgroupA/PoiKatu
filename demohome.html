@@ -37,7 +37,10 @@
     }
     */
    //↓動作確認済み
-    function ShowAccount(anum){
+   function ShowAccount2(){
+    var anum = $('input[name="acnum"]').val();
+    console.log(anum);
+    
         $.ajax({
             type: 'GET',
             timeout: 10000,
@@ -56,8 +59,8 @@
         // 失敗時
         }).always(function(e){
         });
-    } 
     
+    }   
     function TransferAccount(from,to,amountOfMoney){
         $.ajax({
             type: 'POST',
@@ -92,6 +95,7 @@
         $('#showtarget').text(a)    
        
       */
+    
 </script>
 
     
@@ -110,11 +114,11 @@
     <h2>振り込み</h2>
     <div id="mynum">
         <label for="acnum">口座番号 (7桁) を入力してください:</label>
-        <input type="text" id="acnum" name="acnum" required
+        <input type="text" name="acnum" value="" required
             minlength="7" maxlength="7" size="15">
     </div> 
     <br>  
-    <button onClick="ShowAccount('0000002')">預金金額</button>
+    <button onClick="ShowAccount2()">預金金額</button>
     <div id="showbalance"></div>
     
     <p>振り込む金額を入力してください</p>
