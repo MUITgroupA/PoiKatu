@@ -34,6 +34,65 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
     </script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+      function PointCheck(id){ //ポイントの確認
+          $.ajax({
+              type: 'GET',
+              timeout: 10000,
+              url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2",
+              headers: {
+                  "accept": "application/json"
+              },
+              data: { id : id },
+              dataType: 'json',
+              cache: false,
+          }).done(function(e){
+              console.log(e);
+              $('#now-point').text(JSON.stringify(e.Point));
+          });
+      }
+      function PointMove(id,furikomi_id,val){ //ポイントの移動
+          if(id == furikomi_id){
+            alert("自分自身にポイントを送ることはできません")
+          }
+          if(Number($('#now-point').text()) - val < 0){
+            alert("所持ポイントが足りません");
+          }
+          else{
+            //if(PointCheck(id)){
+            $.ajax({
+                type: 'PUT',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2?id="+furikomi_id+"&val="+val,
+                headers: {
+                    "accept": "application/json"
+                },
+                dataType: 'json',
+                cache: false,
+            }).done(function(e){
+              $.ajax({
+                type: 'PUT',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2?id="+id+"&val="+(-val),
+                headers: {
+                    "accept": "application/json"
+                },
+                dataType: 'json',
+                cache: false,
+              });
+              //console.log(JSON.stringify(e.Point));
+              PointCheck(id);
+            });
+          }
+      }
+      function PointSoufu(){
+        PointMove(1,$('#okurisaki-id').val(),$('#okuru-point').val());
+      }  
+      $(document).ready( function(){
+          PointCheck(1);
+      });
+    </script>
   </head>
   <body>
 
@@ -124,7 +183,7 @@
             <h2 class="section-title wow fadeInDown" data-wow-delay=".5s"><a rel="nofollow">ポイント送付</a></h2>
     　</div>
           <h1 class="section-title wow fadeInDown" data-wow-delay=".5s">
-	          〇※▲✖〆ポイントあります
+	          <span id="now-point"></span>ポイントあります
 	        </h1>
           <p class="section-subcontent">ポイントの送り相手・ポイント数を入力してください。</p>
         </div>
@@ -132,18 +191,18 @@
           <div class="input-group-prepend">
             <span class="input-group-text">送り先（ID）</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" id="okurisaki-id">
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">送るPOINT</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" id="okuru-point">
         </div>
 
         <div class="input-group mb-2">
           <div class="input-group-append">
-            <button type="button" class="btn bg-danger btn-outline-secondary">Button</button>
+            <button type="button" class="btn bg-danger btn-outline-secondary" onclick="PointSoufu()">Button</button>
           </div>
         </div>
           </div>
