@@ -34,6 +34,37 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
     </script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+      function FPGet(id){ //指定されたFPの個人情報
+        $.ajax({
+            type: 'GET',
+            timeout: 10000,
+            url: "https://pmj0we4ptc.execute-api.ap-northeast-1.amazonaws.com/fp/fp?id="+id,
+            headers: {
+                "accept": "application/json",
+            },
+            data: { id : id },
+            dataType: 'json',
+            cache: false,
+        }).done(function(data){
+            console.log(data);
+            // $('#name_'+id).text(JSON.stringify(data.NameFirst));
+            // $('#data_'+id).text("年齢："+JSON.stringify(data.Year)+"<br>"+
+            //                    "ポイント："+JSON.stringify(data.Point));
+            $('#year_'+id).text("年齢："+data.Year);
+            $('#point_'+id).text("ポイント："+data.Point);
+            $('#name_'+id).text(data.NameLast+data.NameFirst);
+            $('#job_'+id).text(data.Job);
+        });
+      }
+
+      window.onload = function(){
+        for(var i = 1;i < 9;i++){
+          FPGet(i);
+        }
+      }
+    </script>
   </head>
   <body>
 
@@ -131,7 +162,12 @@
 	              <img src="assets/img/team/team-01.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+	                	<p class="content-white" id="year_1">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
+                    <p class="content-white" id="point_1">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
 			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -142,12 +178,12 @@
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2>
-	                Sara smith
+	              <h2 id="name_1">
+	                <!-- Sara smith -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p>
-	                Founder And ceo
+	              <p id="job_1">
+	                <!-- Founder And ceo -->
 	              </p>
 	            </div>
 	          </div>
@@ -161,7 +197,12 @@
 	               <img src="assets/img/team/team-02.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+	                	<p class="content-white" id="year_2">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
+                    <p class="content-white" id="point_2">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
 			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -172,12 +213,12 @@
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2>
-	                Sommer Christian
+	              <h2 id="name_2">
+	                <!-- Sommer Christian -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p>
-	                creative studio head
+	              <p id="job_2">
+	                <!-- creative studio head -->
 	              </p>
 	            </div>
             </div><!-- Team Item Starts -->
@@ -190,7 +231,12 @@
 	                <img src="assets/img/team/team-03.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+	                	<p class="content-white" id="year_3">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
+                    <p class="content-white" id="point_3">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
 			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -201,12 +247,12 @@
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2>
-	                Jane lupkin
+	              <h2 id="name_3">
+	                <!-- Jane lupkin -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p>
-	                magento developer
+	              <p id="job_3">
+	                <!-- magento developer -->
 	              </p>
 	            </div>
             </div>
@@ -220,7 +266,12 @@
 	              <img src="assets/img/team/team-04.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+	                	<p class="content-white" id="year_4">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
+                    <p class="content-white" id="point_4">
+                      <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                    </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
 			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -231,12 +282,12 @@
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2>
-	                Sebastian roll
+	              <h2 id="name_4">
+	                <!-- Sebastian roll -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p>
-	                Logo / branding designer
+	              <p id="job_4">
+	                <!-- Logo / branding designer -->
 	              </p>
 	            </div>
             </div><!-- Team Item Ends -->
@@ -258,7 +309,12 @@
                     <img src="assets/img/team/team-05.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p class="content-white" id="year_5">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
+                        <p class="content-white" id="point_5">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
                        <div class="orange-line"></div>
                        <div class="social">
                          <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a>
@@ -269,12 +325,12 @@
                     </figcaption>
                   </figure>
                   <div class="info">
-                    <h2>
-                      Sara smith
+                    <h2 id="name_5">
+                      <!-- Sara smith -->
                     </h2>
                     <div class="orange-line"></div>
-                    <p>
-                      Founder And ceo
+                    <p id="job_5">
+                      <!-- Founder And ceo -->
                     </p>
                   </div>
                 </div>
@@ -288,7 +344,12 @@
                      <img src="assets/img/team/team-06.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p class="content-white" id="year_6">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
+                        <p class="content-white" id="point_6">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
                          <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -299,12 +360,12 @@
                     </figcaption>
                   </figure>
                   <div class="info">
-                    <h2>
-                      Sommer Christian
+                    <h2 id="name_6">
+                      <!-- Sommer Christian -->
                     </h2>
                     <div class="orange-line"></div>
-                    <p>
-                      creative studio head
+                    <p id="job_6">
+                      <!-- creative studio head -->
                     </p>
                   </div>
                 </div><!-- Team Item Starts -->
@@ -317,7 +378,12 @@
                       <img src="assets/img/team/team-07.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p class="content-white" id="year_7">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
+                        <p class="content-white" id="point_7">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
                          <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -328,12 +394,12 @@
                     </figcaption>
                   </figure>
                   <div class="info">
-                    <h2>
-                      Jane lupkin
+                    <h2 id="name_7">
+                      <!-- Jane lupkin -->
                     </h2>
                     <div class="orange-line"></div>
-                    <p>
-                      magento developer
+                    <p id="job_7">
+                      <!-- magento developer -->
                     </p>
                   </div>
                 </div>
@@ -347,8 +413,12 @@
                     <img src="assets/img/team/team-08.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        
+                        <p class="content-white" id="year_8">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
+                        <p class="content-white" id="point_8">
+                          <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
+                        </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
                          <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
@@ -359,12 +429,12 @@
                     </figcaption>
                   </figure>
                   <div class="info">
-                    <h2>
-                      Sebastian roll
+                    <h2 id="name_8">
+                      <!-- Sebastian roll -->
                     </h2>
                     <div class="orange-line"></div>
-                    <p>
-                      Logo / branding designer
+                    <p id="job_8">
+                      <!-- Logo / branding designer -->
                     </p>
                   </div>
                 </div><!-- Team Item Ends -->
