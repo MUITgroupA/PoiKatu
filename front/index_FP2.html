@@ -64,6 +64,98 @@
           FPGet(i);
         }
       }
+      function FPGet_Point(id){ //指定されたFPの個人情報
+        $.ajax({
+            type: 'GET',
+            timeout: 10000,
+            url: "https://pmj0we4ptc.execute-api.ap-northeast-1.amazonaws.com/fp/fp?id="+id,
+            headers: {
+                "accept": "application/json",
+            },
+            data: { id : id },
+            dataType: 'json',
+            cache: false,
+        }).done(function(data){
+            console.log(data.Point);
+            console.log(data.id);
+            $('#FPGet-point').val(data.Point);
+            $('#okurisaki-id').val(data.id);
+        });
+    }
+
+    function FPNumCheck(id){ //FPの電話番号の確認
+        $.ajax({
+            type: 'GET',
+            timeout: 10000,
+            url: "https://pmj0we4ptc.execute-api.ap-northeast-1.amazonaws.com/fp?id="+id,
+            headers: {
+                "accept": "application/json"
+            },
+            data: { id : id },
+            dataType: 'json',
+            cache: false,
+        }).done(function(e){
+            console.log(e)
+            console.log(id)
+            $('#num_'+id).text(JSON.stringify(e));
+        });
+    }
+    function PointCheck(id){ //ポイントの確認
+          $.ajax({
+              type: 'GET',
+              timeout: 10000,
+              url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2",
+              headers: {
+                  "accept": "application/json"
+              },
+              data: { id : id },
+              dataType: 'json',
+              cache: false,
+          }).done(function(e){
+              console.log(e.Point);
+              $('#now-point').val(e.Point);
+          });
+      }
+      function PointMove(id,furikomi_id,val){ //ポイントの移動
+        console.log(furikomi_id);
+        console.log(val)
+          if(Number($('#now-point').val()) - val < 0){
+            alert("所持ポイントが足りません");
+          }
+          else{
+            //if(PointCheck(id)){
+            $.ajax({
+                type: 'PUT',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v3/?id="+furikomi_id+"&val="+val,
+                headers: {
+                    "accept": "application/json"
+                },
+                dataType: 'json',
+                cache: false,
+            }).done(function(e){
+              $.ajax({
+                type: 'PUT',
+                timeout: 10000,
+                url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v3/?id="+id+"&val="+(-val),
+                headers: {
+                    "accept": "application/json"
+                },
+                dataType: 'json',
+                cache: false,
+              });
+              console.log(e);
+              PointCheck(id);
+              FPNumCheck(furikomi_id);
+            });
+          }
+      }
+      function PointSoufu(){
+          PointMove(1,$('#okurisaki-id').val(),$('#FPGet-point').val());
+      }  
+      $(document).ready( function(){
+          PointCheck(1);
+      });
     </script>
   </head>
   <body>
@@ -162,27 +254,30 @@
 	              <img src="assets/img/team/team-01.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white" id="year_1">
+	                	<p class="content-white" id="year_2">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
-                    <p class="content-white" id="point_1">
+                    <p class="content-white" id="point_2">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
-			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-			               <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-			               <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                      <button onclick="FPGet_Point(2)">select</button>
+                      <input type="hidden" id="now-point">
+                      <input type="hidden" id="okurisaki-id">
+                      <input type="hidden" id="FPGet-point">
+                      <buttontype="button" onclick="PointSoufu()">Button</button>
+                      <div id="num_2"></div>
 		               </div>
 	                </div>
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2 id="name_1">
+	              <h2 id="name_2">
 	                <!-- Sara smith -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p id="job_1">
+	              <p id="job_2">
 	                <!-- Founder And ceo -->
 	              </p>
 	            </div>
@@ -197,27 +292,30 @@
 	               <img src="assets/img/team/team-02.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white" id="year_2">
+	                	<p class="content-white" id="year_3">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
-                    <p class="content-white" id="point_2">
+                    <p class="content-white" id="point_3">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
-			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-			               <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-			               <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                      <button onclick="FPGet_Point(3)">select</button>
+                      <input type="hidden" id="now-point">
+                      <input type="hidden" id="okurisaki-id">
+                      <input type="hidden" id="FPGet-point">
+                      <buttontype="button" onclick="PointSoufu()">Button</button>
+                      <div id="num_3"></div>
 		               </div>
 	                </div>
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2 id="name_2">
+	              <h2 id="name_3">
 	                <!-- Sommer Christian -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p id="job_2">
+	              <p id="job_3">
 	                <!-- creative studio head -->
 	              </p>
 	            </div>
@@ -231,27 +329,30 @@
 	                <img src="assets/img/team/team-03.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white" id="year_3">
+	                	<p class="content-white" id="year_4">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
-                    <p class="content-white" id="point_3">
+                    <p class="content-white" id="point_4">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
-			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-			               <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-			               <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                      <button onclick="FPGet_Point(4)">select</button>
+                      <input type="hidden" id="now-point">
+                      <input type="hidden" id="okurisaki-id">
+                      <input type="hidden" id="FPGet-point">
+                      <buttontype="button" onclick="PointSoufu()">Button</button>
+                      <div id="num_4"></div>
 		               </div>
 	                </div>
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2 id="name_3">
+	              <h2 id="name_4">
 	                <!-- Jane lupkin -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p id="job_3">
+	              <p id="job_4">
 	                <!-- magento developer -->
 	              </p>
 	            </div>
@@ -266,27 +367,30 @@
 	              <img src="assets/img/team/team-04.jpg" alt="">
 	              <figcaption class="our-team">
 	                <div class="details">
-	                	<p class="content-white" id="year_4">
+	                	<p class="content-white" id="year_5">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
-                    <p class="content-white" id="point_4">
+                    <p class="content-white" id="point_5">
                       <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                     </p>
 		               <div class="orange-line"></div>
 		               <div class="social"> 
-			               <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-			               <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-			               <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                      <button onclick="FPGet_Point(5)">select</button>
+                      <input type="hidden" id="now-point">
+                      <input type="hidden" id="okurisaki-id">
+                      <input type="hidden" id="FPGet-point">
+                      <buttontype="button" onclick="PointSoufu()">Button</button>
+                      <div id="num_5"></div>
 		               </div>
 	                </div>
 		            </figcaption>
 	            </figure>
 	            <div class="info">
-	              <h2 id="name_4">
+	              <h2 id="name_5">
 	                <!-- Sebastian roll -->
 	              </h2>
 	              <div class="orange-line"></div>
-	              <p id="job_4">
+	              <p id="job_5">
 	                <!-- Logo / branding designer -->
 	              </p>
 	            </div>
@@ -309,17 +413,20 @@
                     <img src="assets/img/team/team-05.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white" id="year_5">
+                        <p class="content-white" id="year_6">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
-                        <p class="content-white" id="point_5">
+                        <p class="content-white" id="point_6">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
                        <div class="orange-line"></div>
                        <div class="social">
-                         <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a>
-                         <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a>
-                         <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                          <button onclick="FPGet_Point(6)">select</button>
+                          <input type="hidden" id="now-point">
+                          <input type="hidden" id="okurisaki-id">
+                          <input type="hidden" id="FPGet-point">
+                          <buttontype="button" onclick="PointSoufu()">Button</button>
+                          <div id="num_6"></div>
                        </div>
                       </div>
                     </figcaption>
@@ -344,17 +451,20 @@
                      <img src="assets/img/team/team-06.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white" id="year_6">
+                        <p class="content-white" id="year_7">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
-                        <p class="content-white" id="point_6">
+                        <p class="content-white" id="point_7">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
-                         <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-                         <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-                         <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                          <button onclick="FPGet_Point(7)">select</button>
+                          <input type="hidden" id="now-point">
+                          <input type="hidden" id="okurisaki-id">
+                          <input type="hidden" id="FPGet-point">
+                          <buttontype="button" onclick="PointSoufu()">Button</button>
+                          <div id="num_7"></div>
                        </div>
                       </div>
                     </figcaption>
@@ -378,17 +488,20 @@
                       <img src="assets/img/team/team-07.jpg" alt="">
                     <figcaption class="our-team">
                       <div class="details">
-                        <p class="content-white" id="year_7">
+                        <p class="content-white" id="year_8">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
-                        <p class="content-white" id="point_7">
+                        <p class="content-white" id="point_8">
                           <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. -->
                         </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
-                         <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-                         <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-                         <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                          <button onclick="FPGet_Point(8)">select</button>
+                          <input type="hidden" id="now-point">
+                          <input type="hidden" id="okurisaki-id">
+                          <input type="hidden" id="FPGet-point">
+                          <buttontype="button" onclick="PointSoufu()">Button</button>
+                          <div id="num_8"></div>
                        </div>
                       </div>
                     </figcaption>
@@ -421,9 +534,12 @@
                         </p>
                        <div class="orange-line"></div>
                        <div class="social"> 
-                         <a class="facebook" href="http://www.facebook.com"><i class="fa fa-facebook"></i></a> 
-                         <a class="twitter" href="http://www.twitter.com"><i class="fa fa-twitter"></i></a> 
-                         <a class="google-plus" href="http://plus.google.com"><i class="fa fa-google-plus"></i></a>
+                          <button onclick="FPGet_Point(8)">select</button>
+                          <input type="hidden" id="now-point">
+                          <input type="hidden" id="okurisaki-id">
+                          <input type="hidden" id="FPGet-point">
+                          <buttontype="button" onclick="PointSoufu()">Button</button>
+                          <div id="num_8"></div>
                        </div>
                       </div>
                     </figcaption>
