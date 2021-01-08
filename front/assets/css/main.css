@@ -1695,9 +1695,15 @@ ul li > ul > li.active > a {
   -webkit-transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
-#team .team-item figure figcaption .details {
+#team .team-item figure figcaption {
   position: absolute;
-  top: 30%;
+  /* top: 30%; */
+  top: 0%;
+}
+.details {
+  position: absolute;
+  top: 20%;
+  left:20%;
 }
 #team .team-item figure figcaption .content-white {
   font-size: 13px;
