@@ -1702,8 +1702,12 @@ ul li > ul > li.active > a {
 }
 .details {
   position: absolute;
-  top: 20%;
-  left:20%;
+  top: 15%;
+  left:10%;
+}
+
+.social button{
+  background-color: #5dc0ac;
 }
 #team .team-item figure figcaption .content-white {
   font-size: 13px;
