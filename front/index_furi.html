@@ -34,6 +34,58 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
     </script>
     <![endif]-->
+    <script>
+    function ShowAccount2(){
+    var anum = $('input[name="acnum"]').val();
+    console.log(anum);
+    //function ShowAccount(anum){
+      $.ajax({
+          type: 'GET',
+          timeout: 10000,
+          url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/"+anum, //最後の数字7桁が口座番号
+          headers: {
+                      "accept": "application/json",
+                      "Authorization": "vgc9s02t8xizbal6g1wzjeqvwfk25hf2"
+                  },
+          data: { },
+          dataType: 'json',
+          cache: false,
+      }).done(function(e){
+          console.log(e);
+          $('#showbalance').text("現在の預金額"+ e.balance)
+      }).fail(function(e){
+      // 失敗時
+      }).always(function(e){
+      });
+  } 
+  function TransferAccount2(){
+    var from = $('input[name="from"]').val();
+    var to = $('input[name="to"]').val();
+    var amountOfMoney = $('input[name="amountOfMoney"]').val();
+    console.log(from);
+  //function TransferAccount(from,to,amountOfMoney){
+      $.ajax({
+          type: 'POST',
+          timeout: 10000,
+          url: "https://710sbx8qg9.execute-api.ap-northeast-1.amazonaws.com/dev/accounts/transfer",
+          headers: {
+                      "accept": "application/json",
+                      "Authorization": "vgc9s02t8xizbal6g1wzjeqvwfk25hf2",
+                      //"contentType: application/json"
+                  },
+          data: {from : from, to : to, amountOfMoney : amountOfMoney},
+          //contentType: 'application/json',
+          dataType: 'json',
+          cache: false,
+      }).done(function(e){
+          console.log(e);
+          $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"円送金されました")
+      }).fail(function(xhr,err){
+          console.log(xhr);// 失敗時
+      }).always(function(e){
+      });
+  } 
+  </script>
   </head>
   <body>
 
@@ -121,30 +173,94 @@
             <h2 class="section-title wow fadeInDown" data-wow-delay=".5s"><a rel="nofollow">振込</a></h2>
     　</div>
           <h1 class="section-title wow fadeInDown" data-wow-delay=".5s">
-	          残高は 〇※▲✖〆 あります
-	        </h1>
-          <p class="section-subcontent">振込先・金額を入力してください。</p>
+            <div id="mynum">
+              <label for="acnum">口座番号 (7桁) を入力してください:</label>
+              <input type="text" id="acnum" name="acnum" required
+                  minlength="7" maxlength="7" size="15">
+          </div>
+          <div id="showbalance"></div>
+          </h1>
+          
+          <div class="container">
+          <a href="#" class="btn-open" onClick="ShowAccount2()">預金金額確認</a>
+          </div>
+          <style>
+            .container {
+          font-family: "Yu Gothic", YuGothic, Verdana, 'Hiragino Kaku Gothic ProN','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, sans-serif;
+          text-align: center;
+          padding-top: 40px;
+        }
+        .btn-open {
+          display: inline-block;
+          width: 180px;
+          height:50px;
+          text-align: center;
+          background-color: #9ec34b;
+          font-size: 16px;
+          line-height: 52px;
+          color: #FFF;
+          text-decoration: none;
+          font-weight: bold;
+          border: 2px solid #9ec34b;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+        }
+        .btn-open:after{
+          width: 100%;
+          height: 0;
+          content:"";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          background : #FFF;
+          opacity: 0;
+          transform: translateX(-50%) translateY(-50%) rotate(45deg);
+          transition: .2s;
+          z-index: -1;
+        }
+        .btn-open:hover{
+          color: #9ec34b;
+        }
+        .btn-open:hover:after{
+          height: 240%;
+          opacity: 1;
+        }
+        .btn-open:active:after{
+          height: 340%;
+          opacity: 1;
+        }
+            </style>
+          <h2 class="section-subcontent">振込先・金額を入力してください。</h2>
         </div>
+        <div id="transfer"></div>
         <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">振込元（ID）</span>
+          </div>
+          <input type="text" name="from" class="form-control" value="" required
+          minlength="7" maxlength="7" size="15">
           <div class="input-group-prepend">
             <span class="input-group-text">振込先（ID）</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="text" name="to" class="form-control" value="" required
+          minlength="7" maxlength="7" size="15">
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">振込金額</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="number" class="form-control" name="amountOfMoney" required min="0" > 
         </div>
 
         <div class="input-group mb-2">
           <div class="input-group-append">
-            <button type="button" class="btn bg-danger btn-outline-secondary">Button</button>
+            <button type="button" class="btn bg-danger btn-outline-secondary" onclick="TransferAccount2()">振込確定</button>
+            <!--<button type="button" class="btn bg-danger btn-outline-secondary">Button</button> -->
           </div>
         </div>
           </div>
-          <input type="text" class="form-control">
+
         </div>
 
         <footer>
