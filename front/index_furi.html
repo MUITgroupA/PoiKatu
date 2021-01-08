@@ -79,12 +79,30 @@
           cache: false,
       }).done(function(e){
           console.log(e);
-          $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"円送金されました")
+          PointAdd(1,10);
+          $('#transfer').text(from+"から"+to +"へ"+amountOfMoney+"円送金されました");
+          $('#transfer2').text("ポイントが10ポイント付与されました");
       }).fail(function(xhr,err){
           console.log(xhr);// 失敗時
       }).always(function(e){
       });
   } 
+  function PointAdd(id,val){ //ポイントの増加
+        $.ajax({
+            type: 'PUT',
+            timeout: 10000,
+            url: "https://8wq7kom4q2.execute-api.ap-northeast-1.amazonaws.com/v2?id="+id+"&val="+val,
+            headers: {
+                "accept": "application/json"
+            },
+            dataType: 'json',
+            cache: false,
+        }).done(function(e){
+            //console.log(JSON.stringify(e.Point));
+        }).fail(function(e){
+            console.log("failed");
+        });
+  }
   </script>
   </head>
   <body>
@@ -234,6 +252,7 @@
           <h2 class="section-subcontent">振込先・金額を入力してください。</h2>
         </div>
         <div id="transfer"></div>
+        <div id="transfer2"></div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">振込元（ID）</span>
