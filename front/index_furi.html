@@ -52,7 +52,7 @@
           cache: false,
       }).done(function(e){
           console.log(e);
-          $('#showbalance').text("現在の預金額"+ e.balance)
+          $('#showbalance').text("現在の預金額"+ e.balance+"円");
       }).fail(function(e){
       // 失敗時
       }).always(function(e){
@@ -253,6 +253,7 @@
         </div>
         <div id="transfer"></div>
         <div id="transfer2"></div>
+        <center>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">振込元（ID）</span>
@@ -279,6 +280,7 @@
           </div>
         </div>
           </div>
+        </center>  
 
         </div>
 
