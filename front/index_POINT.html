@@ -83,6 +83,7 @@
               });
               //console.log(JSON.stringify(e.Point));
               PointCheck(id);
+              $('#transfer').text(val+"ポイント送付されました");
             });
           }
       }
@@ -186,6 +187,7 @@
 	          <span id="now-point"></span>ポイントあります
 	        </h1>
           <p class="section-subcontent">ポイントの送り相手・ポイント数を入力してください。</p>
+          <center><div id="transfer"></div></center>
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
