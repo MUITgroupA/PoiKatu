@@ -259,22 +259,30 @@
             </style>
           <h2 class="section-subcontent">振込先・金額を入力してください。</h2>
         </div>
+        <div id="transfer"></div>
         <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">振込元（ID）</span>
+          </div>
+          <input type="text" name="from" class="form-control" value="" required
+          minlength="7" maxlength="7" size="15">
           <div class="input-group-prepend">
             <span class="input-group-text">振込先（ID）</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="text" name="to" class="form-control" value="" required
+          minlength="7" maxlength="7" size="15">
         </div>
         <div class="input-group mb-2">
           <div class="input-group-prepend">
             <span class="input-group-text">振込金額</span>
           </div>
-          <input type="text" class="form-control">
+          <input type="number" class="form-control" name="amountOfMoney" required min="0" > 
         </div>
 
         <div class="input-group mb-2">
           <div class="input-group-append">
-            <button type="button" class="btn bg-danger btn-outline-secondary">Button</button>
+            <button type="button" class="btn bg-danger btn-outline-secondary" onclick="TransferAccount2()">振込確定</button>
+            <!--<button type="button" class="btn bg-danger btn-outline-secondary">Button</button> -->
           </div>
         </div>
           </div>
